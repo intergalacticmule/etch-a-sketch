@@ -14,22 +14,20 @@ function createGrid(parent, size) {
 	gridCells = document.querySelectorAll(".grid-cell");
 }
 
-createGrid(gridContainer, 20);
+createGrid(gridContainer, 16);
 
-function setColor(e) {
-	e.target.style.backgroundColor = "black";
+function setColor(e, color) {
+	e.target.style.backgroundColor = color;
 }
 
 function manageEventListeners(gridCells) {
-	gridContainer.addEventListener("mousedown", () => {
+	gridContainer.addEventListener("mousedown", (e) => {
+		setColor(e, "black");
+		console.log("alabala");
 		gridCells.forEach((cell) => {
-			cell.addEventListener("mouseover", setColor);
+			cell.addEventListener("mouseover", (e) => setColor(e, "black"));
+			console.log("balaala");
 		});
-	});
-	window.addEventListener("mouseup", () => {
-		gridCells.forEach((cell) =>
-			cell.removeEventListener("mouseover", setColor)
-		);
 	});
 }
 
