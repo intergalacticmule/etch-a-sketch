@@ -2,8 +2,27 @@
 	box-sizing: border-box;
 }
 
-#grid-container {
+.flex {
 	display: flex;
+}
+
+.column {
+	flex-direction: column;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+.align-center {
+	align-items: center;
+}
+
+#container {
+	height: 100vh;
+}
+
+#grid-container {
 	height: 500px;
 	width: 500px;
 	flex-wrap: wrap;
