@@ -8,6 +8,20 @@
 		<title>Etch-a-sketch</title>
 	</head>
 	<body>
-		<div id="grid-container"></div>
+		<div id="container" class="flex justify-center align-center">
+			<div id="controls-container">
+				<div id="slider-container" class="flex column align-center">
+					<p>16 x 16</p>
+					<input
+						type="range"
+						min="1"
+						max="64"
+						value="16"
+						id="slider"
+					/>
+				</div>
+			</div>
+			<div id="grid-container" class="flex"></div>
+		</div>
 	</body>
 </html>
