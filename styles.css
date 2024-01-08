@@ -8,3 +8,7 @@
 	width: 500px;
 	flex-wrap: wrap;
 }
+
+.grid-cell {
+	user-select: none;
+}
