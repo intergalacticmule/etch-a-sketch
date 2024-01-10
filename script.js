@@ -1,14 +1,13 @@
 const gridContainer = document.querySelector("#grid-container");
 let gridCells;
 
-gridContainer.style.border = "1px solid black";
-
 function createGrid(parent, size) {
 	for (let i = 1; i <= size * size; i++) {
 		const cell = document.createElement("div");
 		cell.classList.add("grid-cell");
 		cell.style.height = `${gridContainer.clientHeight / size}px`;
 		cell.style.width = `${gridContainer.clientWidth / size}px`;
+		cell.classList.add("border-dotted");
 		parent.append(cell);
 	}
 	gridCells = document.querySelectorAll(".grid-cell");
@@ -16,17 +15,28 @@ function createGrid(parent, size) {
 
 createGrid(gridContainer, 16);
 
-function setColor(e, color) {
+function setColors(e, color) {
 	e.target.style.backgroundColor = color;
+	e.target.classList.add("border-none");
+}
+
+function mouseoverEventListener(e) {
+	setColors(e, "black");
 }
 
 function manageEventListeners(gridCells) {
 	gridContainer.addEventListener("mousedown", (e) => {
-		setColor(e, "black");
+		setColors(e, "black");
 		console.log("alabala");
 		gridCells.forEach((cell) => {
-			cell.addEventListener("mouseover", (e) => setColor(e, "black"));
+			cell.addEventListener("mouseover", mouseoverEventListener);
 			console.log("balaala");
+		});
+	});
+
+	gridContainer.addEventListener("mouseup", () => {
+		gridCells.forEach((cell) => {
+			cell.removeEventListener("mouseover", mouseoverEventListener);
 		});
 	});
 }
