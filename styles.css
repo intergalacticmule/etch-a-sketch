@@ -1,5 +1,7 @@
 * {
 	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 .flex {
@@ -31,6 +33,7 @@
 	height: 600px;
 	width: 600px;
 	display: grid;
+	box-shadow: black 0px 0px 8px;
 }
 
 .grid-cell {
@@ -44,4 +47,10 @@
 #controls-container {
 	height: 50%;
 	justify-content: space-around;
+	gap: 40px;
+}
+
+button {
+	width: 100%;
+	height: 40px;
 }
