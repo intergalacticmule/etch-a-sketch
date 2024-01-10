@@ -65,9 +65,9 @@ function generateRandomNumber() {
 }
 
 function generateHexColor() {
-	var hexColor = "#";
+	let hexColor = "#";
 	for (i = 0; i < 3; i++) {
-		var num = generateRandomNumber().toString(16);
+		let num = generateRandomNumber().toString(16);
 		if (num.length < 2) {
 			num = "0" + num;
 		}
