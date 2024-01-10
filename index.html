@@ -9,8 +9,11 @@
 	</head>
 	<body>
 		<div id="container" class="flex justify-center align-center">
-			<div id="controls-container">
-				<div id="slider-container" class="flex column align-center">
+			<div id="controls-container" class="flex column align-center">
+				<input type="color" />
+				<button>Rainbow</button>
+				<button>Eraser</button>
+				<div class="flex column align-center">
 					<p>16 x 16</p>
 					<input
 						type="range"
@@ -20,8 +23,9 @@
 						id="slider"
 					/>
 				</div>
+				<button>Reset</button>
 			</div>
-			<div id="grid-container" class="flex"></div>
+			<div id="grid-container" class="flex border-dotted"></div>
 		</div>
 	</body>
 </html>
