@@ -10,20 +10,20 @@
 	<body>
 		<div id="container" class="flex justify-center align-center">
 			<div id="controls-container" class="flex column align-center">
-				<input type="color" />
-				<button>Rainbow</button>
-				<button>Eraser</button>
+				<input id="color-picker" type="color" />
+				<button id="rainbow">Rainbow</button>
+				<button id="eraser">Eraser</button>
 				<div class="flex column align-center">
-					<p>16 x 16</p>
+					<p id="slider-value">16 x 16</p>
 					<input
+						id="slider"
 						type="range"
 						min="1"
 						max="64"
 						value="16"
-						id="slider"
 					/>
 				</div>
-				<button>Reset</button>
+				<button id="reset">Reset</button>
 			</div>
 			<div id="grid-container" class="flex border-dotted"></div>
 		</div>
