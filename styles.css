@@ -18,8 +18,13 @@
 	align-items: center;
 }
 
+.border-dotted {
+	border: 0.5px dotted rgb(190, 188, 188);
+}
+
 #container {
 	height: 100vh;
+	gap: 20px;
 }
 
 #grid-container {
@@ -30,4 +35,13 @@
 
 .grid-cell {
 	user-select: none;
+}
+
+.border-none {
+	border: none;
+}
+
+#controls-container {
+	height: 50%;
+	justify-content: space-around;
 }
