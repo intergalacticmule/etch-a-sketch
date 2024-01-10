@@ -1,4 +1,9 @@
 const gridContainer = document.querySelector("#grid-container");
+const colorPicker = document.querySelector("#color-picker");
+const rainbowButton = document.querySelector("#rainbow");
+
+let rainbowMode = false;
+let chosenColor = colorPicker.value;
 let gridCells;
 
 function createGrid(parent, size) {
@@ -21,24 +26,33 @@ function setColors(e, color) {
 }
 
 function mouseoverEventListener(e) {
-	setColors(e, "black");
+	setColors(e, chosenColor);
+}
+
+function changeColor() {
+	chosenColor = colorPicker.value;
+}
+
+function toggleRainbowMode() {
+	rainbowMode = true;
 }
 
 function manageEventListeners(gridCells) {
 	gridContainer.addEventListener("mousedown", (e) => {
-		setColors(e, "black");
-		console.log("alabala");
+		setColors(e, chosenColor);
 		gridCells.forEach((cell) => {
 			cell.addEventListener("mouseover", mouseoverEventListener);
-			console.log("balaala");
 		});
 	});
 
-	gridContainer.addEventListener("mouseup", () => {
+	window.addEventListener("mouseup", () => {
 		gridCells.forEach((cell) => {
 			cell.removeEventListener("mouseover", mouseoverEventListener);
 		});
 	});
 }
+
+colorPicker.addEventListener("input", changeColor);
+rainbowButton.addEventListener("click", toggleRainbowMode);
 
 manageEventListeners(gridCells);
