@@ -93,6 +93,10 @@ function changeGridSize() {
 	gridSize.textContent = `${slider.value} x ${slider.value}`;
 }
 
+function mouseoverEventListener(e) {
+	setColor(e, "black");
+}
+
 function manageEventListeners(gridCells) {
 	gridContainer.addEventListener("mousedown", (e) => {
 		setColors(e, chosenColor);
