@@ -7,7 +7,7 @@ const clearButton = document.querySelector("#clear");
 const slider = document.querySelector("#slider");
 const gridSize = document.querySelector("#grid-size");
 
-currentMode = "color";
+let currentMode;
 let colorMode = true;
 let rainbowMode = false;
 let eraserMode = false;
@@ -20,6 +20,7 @@ function createGrid(parent, size) {
 	for (let i = 1; i <= size * size; i++) {
 		const cell = document.createElement("div");
 		cell.classList.add("grid-cell", "border-dotted");
+		cell.style.backgroundColor = "#ffffff";
 		parent.appendChild(cell);
 	}
 	gridCells = document.querySelectorAll(".grid-cell");
@@ -57,7 +58,26 @@ function pickColor() {
 }
 
 function setMode(mode) {
+	activateButton(mode);
 	currentMode = mode;
+}
+
+function activateButton(mode) {
+	if (currentMode === "rainbow") {
+		rainbowButton.classList.remove("active");
+	} else if (currentMode === "color") {
+		colorButton.classList.remove("active");
+	} else if (currentMode === "eraser") {
+		eraserButton.classList.remove("active");
+	}
+
+	if (mode === "rainbow") {
+		rainbowButton.classList.add("active");
+	} else if (mode === "color") {
+		colorButton.classList.add("active");
+	} else if (mode === "eraser") {
+		eraserButton.classList.add("active");
+	}
 }
 
 function generateRandomNumber() {
@@ -94,7 +114,7 @@ function changeGridSize() {
 }
 
 function mouseoverEventListener(e) {
-	setColor(e, "black");
+	setColors(e, "black");
 }
 
 function manageEventListeners(gridCells) {
@@ -115,6 +135,7 @@ function manageEventListeners(gridCells) {
 window.onload = () => {
 	createGrid(gridContainer, slider.value);
 	manageEventListeners(gridCells);
+	setMode("color", colorButton);
 };
 
 colorPicker.addEventListener("input", pickColor);
