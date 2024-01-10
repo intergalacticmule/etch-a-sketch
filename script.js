@@ -1,8 +1,10 @@
 const gridContainer = document.querySelector("#grid-container");
 const colorPicker = document.querySelector("#color-picker");
+const colorButton = document.querySelector("#color");
 const rainbowButton = document.querySelector("#rainbow");
 const eraserButton = document.querySelector("#eraser");
 
+let colorMode = true;
 let rainbowMode = false;
 let eraserMode = false;
 let chosenColor = colorPicker.value;
@@ -49,8 +51,10 @@ function mouseoverEventListener(e) {
 	setColors(e, chosenColor);
 }
 
-function changeColorFromColorPicker() {
+function toggleColorMode() {
+	colorMode = true;
 	rainbowMode = false;
+	eraserMode = false;
 	chosenColor = colorPicker.value;
 }
 
@@ -58,8 +62,19 @@ function toggleRainbowMode() {
 	if (rainbowMode === false) {
 		rainbowMode = true;
 		eraserMode = false;
+		colorMode = false;
 	} else {
 		rainbowMode = false;
+	}
+}
+
+function toggleEraserMode() {
+	if (eraserMode === false) {
+		eraserMode = true;
+		rainbowMode = false;
+		colorMode = false;
+	} else {
+		eraserMode = false;
 	}
 }
 
@@ -79,15 +94,6 @@ function generateHexColor() {
 	return hexColor;
 }
 
-function toggleEraserMode() {
-	if (eraserMode === false) {
-		eraserMode = true;
-		rainbowMode = false;
-	} else {
-		eraserMode = false;
-	}
-}
-
 function manageEventListeners(gridCells) {
 	gridContainer.addEventListener("mousedown", (e) => {
 		setColors(e, chosenColor);
@@ -103,7 +109,8 @@ function manageEventListeners(gridCells) {
 	});
 }
 
-colorPicker.addEventListener("input", changeColorFromColorPicker);
+colorPicker.addEventListener("input", toggleColorMode);
+colorButton.addEventListener("click", toggleColorMode);
 rainbowButton.addEventListener("click", toggleRainbowMode);
 eraserButton.addEventListener("click", toggleEraserMode);
 
