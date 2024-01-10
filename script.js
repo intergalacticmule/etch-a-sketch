@@ -3,7 +3,11 @@ const colorPicker = document.querySelector("#color-picker");
 const colorButton = document.querySelector("#color");
 const rainbowButton = document.querySelector("#rainbow");
 const eraserButton = document.querySelector("#eraser");
+const clearButton = document.querySelector("#clear");
+const slider = document.querySelector("#slider");
+const gridSize = document.querySelector("#grid-size");
 
+currentMode = "color";
 let colorMode = true;
 let rainbowMode = false;
 let eraserMode = false;
@@ -11,30 +15,31 @@ let chosenColor = colorPicker.value;
 let gridCells;
 
 function createGrid(parent, size) {
+	gridContainer.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+	gridContainer.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 	for (let i = 1; i <= size * size; i++) {
 		const cell = document.createElement("div");
-		cell.classList.add("grid-cell");
-		cell.style.height = `${gridContainer.clientHeight / size}px`;
-		cell.style.width = `${gridContainer.clientWidth / size}px`;
-		cell.classList.add("border-dotted");
-		parent.append(cell);
+		cell.classList.add("grid-cell", "border-dotted");
+		parent.appendChild(cell);
 	}
 	gridCells = document.querySelectorAll(".grid-cell");
 }
 
-createGrid(gridContainer, 16);
-
 function setColors(e, color) {
-	if (rainbowMode === true) {
+	if (currentMode === "rainbow") {
 		e.target.style.backgroundColor = generateHexColor();
 		adjustBorder(false, e.target);
-	} else if (eraserMode == true) {
+	} else if (currentMode === "eraser") {
 		e.target.style.backgroundColor = "#ffffff";
 		adjustBorder(true, e.target);
 	} else {
 		e.target.style.backgroundColor = color;
 		adjustBorder(false, e.target);
 	}
+}
+
+function addMouseoverListener(e) {
+	setColors(e, chosenColor);
 }
 
 function adjustBorder(haveBorder, target) {
@@ -47,35 +52,12 @@ function adjustBorder(haveBorder, target) {
 	}
 }
 
-function mouseoverEventListener(e) {
-	setColors(e, chosenColor);
-}
-
-function toggleColorMode() {
-	colorMode = true;
-	rainbowMode = false;
-	eraserMode = false;
+function pickColor() {
 	chosenColor = colorPicker.value;
 }
 
-function toggleRainbowMode() {
-	if (rainbowMode === false) {
-		rainbowMode = true;
-		eraserMode = false;
-		colorMode = false;
-	} else {
-		rainbowMode = false;
-	}
-}
-
-function toggleEraserMode() {
-	if (eraserMode === false) {
-		eraserMode = true;
-		rainbowMode = false;
-		colorMode = false;
-	} else {
-		eraserMode = false;
-	}
+function setMode(mode) {
+	currentMode = mode;
 }
 
 function generateRandomNumber() {
@@ -94,24 +76,46 @@ function generateHexColor() {
 	return hexColor;
 }
 
+function clearGrid() {
+	gridContainer.innerHTML = "";
+}
+
+function reloadGrid() {
+	clearGrid();
+	createGrid(gridContainer, slider.value);
+	manageEventListeners(gridCells);
+}
+
+function changeGridSize() {
+	clearGrid();
+	createGrid(gridContainer, slider.value);
+	manageEventListeners(gridCells);
+	gridSize.textContent = `${slider.value} x ${slider.value}`;
+}
+
 function manageEventListeners(gridCells) {
 	gridContainer.addEventListener("mousedown", (e) => {
 		setColors(e, chosenColor);
 		gridCells.forEach((cell) => {
-			cell.addEventListener("mouseover", mouseoverEventListener);
+			cell.addEventListener("mouseover", addMouseoverListener);
 		});
 	});
 
 	window.addEventListener("mouseup", () => {
 		gridCells.forEach((cell) => {
-			cell.removeEventListener("mouseover", mouseoverEventListener);
+			cell.removeEventListener("mouseover", addMouseoverListener);
 		});
 	});
 }
 
-colorPicker.addEventListener("input", toggleColorMode);
-colorButton.addEventListener("click", toggleColorMode);
-rainbowButton.addEventListener("click", toggleRainbowMode);
-eraserButton.addEventListener("click", toggleEraserMode);
+window.onload = () => {
+	createGrid(gridContainer, slider.value);
+	manageEventListeners(gridCells);
+};
 
-manageEventListeners(gridCells);
+colorPicker.addEventListener("input", pickColor);
+colorButton.addEventListener("click", () => setMode("color"));
+rainbowButton.addEventListener("click", () => setMode("rainbow"));
+eraserButton.addEventListener("click", () => setMode("eraser"));
+clearButton.addEventListener("click", reloadGrid);
+slider.addEventListener("input", changeGridSize);
