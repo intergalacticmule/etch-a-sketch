@@ -6,6 +6,7 @@ const eraserButton = document.querySelector("#eraser");
 const clearButton = document.querySelector("#clear");
 const slider = document.querySelector("#slider");
 const gridSize = document.querySelector("#grid-size");
+const exportButton = document.querySelector("#export");
 
 let currentMode;
 let colorMode = true;
@@ -113,8 +114,10 @@ function changeGridSize() {
 	gridSize.textContent = `${slider.value} x ${slider.value}`;
 }
 
-function mouseoverEventListener(e) {
-	setColors(e, "black");
+function exportDrawing() {
+	html2canvas(gridContainer).then((canvas) => {
+		document.body.appendChild(canvas);
+	});
 }
 
 function manageEventListeners(gridCells) {
@@ -144,3 +147,4 @@ rainbowButton.addEventListener("click", () => setMode("rainbow"));
 eraserButton.addEventListener("click", () => setMode("eraser"));
 clearButton.addEventListener("click", reloadGrid);
 slider.addEventListener("input", changeGridSize);
+exportButton.addEventListener("click", exportDrawing);
